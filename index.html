@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6 Juegos Divertidos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Un color de fondo suave */
+        }
+        .game-card {
+            background-color: #ffffff;
+            border-radius: 1rem; /* Bordes más redondeados */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Sombra suave */
+            transition: transform 0.2s ease-in-out;
+        }
+        .game-card:hover {
+            transform: translateY(-5px); /* Efecto de elevación al pasar el ratón */
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem; /* Botones redondeados */
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .btn-primary {
+            background-color: #4f46e5; /* Azul índigo */
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #4338ca; /* Azul índigo más oscuro */
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background-color: #6b7280; /* Gris */
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #4b5563; /* Gris más oscuro */
+            transform: translateY(-1px);
+        }
+        input[type="number"], input[type="text"] {
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid #d1d5db;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        input[type="number"]:focus, input[type="text"]:focus {
+            border-color: #4f46e5;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl font-extrabold text-center text-blue-600 mb-12">juegos de Fabio</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <div id="game1" class="game-card p-6 flex flex-col items-center text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Adivina el Número</h2>
+                <p class="text-gray-600 mb-4">Intenta adivinar un número entre 1 y 100.</p>
+                <div class="w-full max-w-xs">
+                    <input type="number" id="guessInput" class="w-full mb-3" placeholder="Introduce tu número">
+                    <button id="guessButton" class="btn btn-primary w-full mb-2">Adivinar</button>
+                    <p id="guessMessage" class="text-sm text-gray-700"></p>
+                    <button id="resetGuessGame" class="btn btn-secondary w-full mt-4 hidden">Reiniciar Juego</button>
+                </div>
+            </div>
+
+            <div id="game2" class="game-card p-6 flex flex-col items-center text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Piedra, Papel o Tijera</h2>
+                <p class="text-gray-600 mb-4">Juega contra la computadora.</p>
+                <div class="flex space-x-2 mb-4">
+                    <button id="rockBtn" class="btn btn-primary">🪨 Piedra</button>
+                    <button id="paperBtn" class="btn btn-primary">📄 Papel</button>
+                    <button id="scissorsBtn" class="btn btn-primary">✂️ Tijera</button>
+                </div>
+                <p id="rpsResult" class="text-lg font-semibold text-gray-800 mb-2"></p>
+                <p id="rpsScore" class="text-sm text-gray-600">Puntuación: Jugador 0 - Computadora 0</p>
+            </div>
+
+            <div id="game3" class="game-card p-6 flex flex-col items-center text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Tic-Tac-Toe</h2>
+                <p class="text-gray-600 mb-4">Juega contra un amigo (o contra ti mismo).</p>
+                <div id="ticTacToeBoard" class="grid grid-cols-3 gap-2 w-48 h-48 mb-4">
+                    </div>
+                <p id="ticTacToeStatus" class="text-lg font-semibold text-gray-800 mb-2">Turno de X</p>
+                <button id="resetTicTacToe" class="btn btn-secondary mt-2">Reiniciar Juego</button>
+            </div>
+
+            <div id="game4" class="game-card p-6 flex flex-col items-center text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Clicker Simple</h2>
+                <p class="text-gray-600 mb-4">Haz clic tan rápido como puedas para aumentar tu puntuación.</p>
+                <p class="text-5xl font-bold text-blue-600 mb-4" id="clickerScore">0</p>
+                <button id="clickerButton" class="btn btn-primary text-xl px-8 py-4">¡Haz clic!</button>
+                <button id="resetClicker" class="btn btn-secondary mt-4">Reiniciar</button>
+            </div>
+
+            <div id="game5" class="game-card p-6 flex flex-col items-center text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Adivina el Color</h2>
+                <p class="text-gray-600 mb-4">Haz clic en el cuadro que coincida con el color objetivo.</p>
+                <div id="targetColorDisplay" class="w-24 h-24 rounded-lg border-2 border-gray-300 mb-4"></div>
+                <div id="colorOptions" class="grid grid-cols-3 gap-2 w-full max-w-xs">
+                    </div>
+                <p id="colorMatchMessage" class="text-md font-semibold text-gray-800 mt-4"></p>
+                <button id="resetColorMatch" class="btn btn-secondary mt-4">Nuevo Juego</button>
+            </div>
+
+            <div id="game6" class="game-card p-6 flex flex-col items-center text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Lanzar el Dado</h2>
+                <p class="text-gray-600 mb-4">Haz clic para lanzar un dado de 6 caras.</p>
+                <p id="diceResult" class="text-6xl font-bold text-purple-600 mb-4">?</p>
+                <button id="rollDiceButton" class="btn btn-primary text-xl px-8 py-4">Lanzar Dado</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // --- Juego 1: Adivina el Número ---
+        const guessInput = document.getElementById('guessInput');
+        const guessButton = document.getElementById('guessButton');
+        const guessMessage = document.getElementById('guessMessage');
+        const resetGuessGame = document.getElementById('resetGuessGame');
+        let secretNumber;
+        let attempts;
+
+        function initGuessGame() {
+            secretNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            guessMessage.textContent = '';
+            guessInput.value = '';
+            guessInput.disabled = false;
+            guessButton.disabled = false;
+            resetGuessGame.classList.add('hidden');
+        }
+
+        guessButton.addEventListener('click', () => {
+            const userGuess = parseInt(guessInput.value);
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                guessMessage.textContent = 'Por favor, introduce un número válido entre 1 y 100.';
+                guessMessage.style.color = '#dc2626'; // Rojo
+                return;
+            }
+            attempts++;
+
+            if (userGuess === secretNumber) {
+                guessMessage.textContent = `¡Felicidades! Adivinaste el número ${secretNumber} en ${attempts} intentos.`;
+                guessMessage.style.color = '#16a34a'; // Verde
+                guessInput.disabled = true;
+                guessButton.disabled = true;
+                resetGuessGame.classList.remove('hidden');
+            } else if (userGuess < secretNumber) {
+                guessMessage.textContent = 'Demasiado bajo. Intenta de nuevo.';
+                guessMessage.style.color = '#f59e0b'; // Amarillo
+            } else {
+                guessMessage.textContent = 'Demasiado alto. Intenta de nuevo.';
+                guessMessage.style.color = '#f59e0b'; // Amarillo
+            }
+        });
+
+        resetGuessGame.addEventListener('click', initGuessGame);
+        initGuessGame(); // Inicializar el juego al cargar la página
+
+        // --- Juego 2: Piedra, Papel o Tijera ---
+        const rockBtn = document.getElementById('rockBtn');
+        const paperBtn = document.getElementById('paperBtn');
+        const scissorsBtn = document.getElementById('scissorsBtn');
+        const rpsResult = document.getElementById('rpsResult');
+        const rpsScore = document.getElementById('rpsScore');
+        let playerScore = 0;
+        let computerScore = 0;
+
+        function playRPS(playerChoice) {
+            const choices = ['piedra', 'papel', 'tijera'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+
+            let resultText = '';
+            let wonRound = false;
+
+            if (playerChoice === computerChoice) {
+                resultText = `Empate! Ambos eligieron ${playerChoice}.`;
+            } else if (
+                (playerChoice === 'piedra' && computerChoice === 'tijera') ||
+                (playerChoice === 'papel' && computerChoice === 'piedra') ||
+                (playerChoice === 'tijera' && computerChoice === 'papel')
+            ) {
+                resultText = `¡Ganaste! ${playerChoice} vence a ${computerChoice}.`;
+                playerScore++;
+                wonRound = true;
+            } else {
+                resultText = `¡Perdiste! ${computerChoice} vence a ${playerChoice}.`;
+                computerScore++;
+            }
+
+            rpsResult.textContent = resultText;
+            rpsResult.style.color = wonRound ? '#16a34a' : '#dc2626'; // Verde si gana, rojo si pierde
+            rpsScore.textContent = `Puntuación: Jugador ${playerScore} - Computadora ${computerScore}`;
+        }
+
+        rockBtn.addEventListener('click', () => playRPS('piedra'));
+        paperBtn.addEventListener('click', () => playRPS('papel'));
+        scissorsBtn.addEventListener('click', () => playRPS('tijera'));
+
+        // --- Juego 3: Tic-Tac-Toe ---
+        const ticTacToeBoard = document.getElementById('ticTacToeBoard');
+        const ticTacToeStatus = document.getElementById('ticTacToeStatus');
+        const resetTicTacToe = document.getElementById('resetTicTacToe');
+        let board = ['', '', '', '', '', '', '', '', ''];
+        let currentPlayer = 'X';
+        let gameActive = true;
+
+        const winningConditions = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Filas
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columnas
+            [0, 4, 8], [2, 4, 6]             // Diagonales
+        ];
+
+        function handleCellClick(clickedCellEvent) {
+            const clickedCell = clickedCellEvent.target;
+            const clickedCellIndex = parseInt(clickedCell.dataset.cellIndex);
+
+            if (board[clickedCellIndex] !== '' || !gameActive) {
+                return;
+            }
+
+            board[clickedCellIndex] = currentPlayer;
+            clickedCell.textContent = currentPlayer;
+            clickedCell.classList.add(currentPlayer === 'X' ? 'text-blue-600' : 'text-red-600');
+
+            checkResult();
+        }
+
+        function checkResult() {
+            let roundWon = false;
+            for (let i = 0; i < winningConditions.length; i++) {
+                const winCondition = winningConditions[i];
+                let a = board[winCondition[0]];
+                let b = board[winCondition[1]];
+                let c = board[winCondition[2]];
+
+                if (a === '' || b === '' || c === '') {
+                    continue;
+                }
+                if (a === b && b === c) {
+                    roundWon = true;
+                    break;
+                }
+            }
+
+            if (roundWon) {
+                ticTacToeStatus.textContent = `¡El jugador ${currentPlayer} ha ganado!`;
+                ticTacToeStatus.style.color = '#16a34a';
+                gameActive = false;
+                return;
+            }
+
+            let roundDraw = !board.includes('');
+            if (roundDraw) {
+                ticTacToeStatus.textContent = '¡Empate!';
+                ticTacToeStatus.style.color = '#f59e0b';
+                gameActive = false;
+                return;
+            }
+
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            ticTacToeStatus.textContent = `Turno de ${currentPlayer}`;
+            ticTacToeStatus.style.color = '#4b5563';
+        }
+
+        function initTicTacToe() {
+            board = ['', '', '', '', '', '', '', '', ''];
+            currentPlayer = 'X';
+            gameActive = true;
+            ticTacToeStatus.textContent = 'Turno de X';
+            ticTacToeStatus.style.color = '#4b5563';
+            ticTacToeBoard.innerHTML = ''; // Limpiar el tablero
+
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('w-16', 'h-16', 'flex', 'items-center', 'justify-center', 'text-4xl', 'font-bold', 'bg-gray-100', 'rounded-md', 'cursor-pointer', 'select-none');
+                cell.dataset.cellIndex = i;
+                cell.addEventListener('click', handleCellClick);
+                ticTacToeBoard.appendChild(cell);
+            }
+        }
+
+        resetTicTacToe.addEventListener('click', initTicTacToe);
+        initTicTacToe(); // Inicializar el juego al cargar la página
+
+        // --- Juego 4: Clicker Simple ---
+        const clickerScoreDisplay = document.getElementById('clickerScore');
+        const clickerButton = document.getElementById('clickerButton');
+        const resetClickerBtn = document.getElementById('resetClicker');
+        let clickerScore = 0;
+
+        clickerButton.addEventListener('click', () => {
+            clickerScore++;
+            clickerScoreDisplay.textContent = clickerScore;
+        });
+
+        resetClickerBtn.addEventListener('click', () => {
+            clickerScore = 0;
+            clickerScoreDisplay.textContent = clickerScore;
+        });
+
+        // --- Juego 5: Adivina el Color ---
+        const targetColorDisplay = document.getElementById('targetColorDisplay');
+        const colorOptionsContainer = document.getElementById('colorOptions');
+        const colorMatchMessage = document.getElementById('colorMatchMessage');
+        const resetColorMatchBtn = document.getElementById('resetColorMatch');
+        let targetColor;
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function initColorMatch() {
+            colorOptionsContainer.innerHTML = '';
+            colorMatchMessage.textContent = '';
+            targetColor = getRandomColor();
+            targetColorDisplay.style.backgroundColor = targetColor;
+
+            const colors = [targetColor];
+            while (colors.length < 9) { // Generar 8 colores aleatorios más
+                const newColor = getRandomColor();
+                if (!colors.includes(newColor)) {
+                    colors.push(newColor);
+                }
+            }
+
+            // Mezclar los colores
+            colors.sort(() => Math.random() - 0.5);
+
+            colors.forEach(color => {
+                const colorDiv = document.createElement('div');
+                colorDiv.classList.add('w-16', 'h-16', 'rounded-md', 'cursor-pointer', 'border', 'border-gray-300', 'transition', 'transform', 'hover:scale-105');
+                colorDiv.style.backgroundColor = color;
+                colorDiv.dataset.color = color;
+                colorDiv.addEventListener('click', handleColorClick);
+                colorOptionsContainer.appendChild(colorDiv);
+            });
+        }
+
+        function handleColorClick(event) {
+            const clickedColor = event.target.dataset.color;
+            if (clickedColor === targetColor) {
+                colorMatchMessage.textContent = '¡Correcto! Has encontrado el color.';
+                colorMatchMessage.style.color = '#16a34a';
+                // Deshabilitar clics después de adivinar
+                Array.from(colorOptionsContainer.children).forEach(div => div.removeEventListener('click', handleColorClick));
+            } else {
+                colorMatchMessage.textContent = 'Incorrecto. Intenta de nuevo.';
+                colorMatchMessage.style.color = '#dc2626';
+            }
+        }
+
+        resetColorMatchBtn.addEventListener('click', initColorMatch);
+        initColorMatch(); // Inicializar el juego al cargar la página
+
+        // --- Juego 6: Lanzar el Dado ---
+        const diceResultDisplay = document.getElementById('diceResult');
+        const rollDiceButton = document.getElementById('rollDiceButton');
+
+        rollDiceButton.addEventListener('click', () => {
+            const randomNumber = Math.floor(Math.random() * 6) + 1;
+            diceResultDisplay.textContent = randomNumber;
+        });
+    </script>
+</body>
+</html>
